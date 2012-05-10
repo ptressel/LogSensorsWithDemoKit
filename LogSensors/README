@@ -1,0 +1,42 @@
+This demo stores data across runs of the app.  When running in an emulator,
+there are a few issues one must deal with:
+
+First, if you have other apps that save state, you may want to make a separate
+AVD instance for this demo.  Just sayin'...
+
+Next is a little chicken-and-egg problem...  The device state is stored in a
+snapshot, but that doesn't exist until the emulator runs and saves a snapshot
+on exit.  So on the first run one must turn off "load from snapshot".  This
+option isn't provided in the Eclipse Run configuration UI, but is provided by
+the AVD Manager.  So the first time you run the emulator, don't start it with
+Eclipse's Run, but rather with:
+  Window -> Android AVD Manager -> select your AVD -> Start.
+That will bring up a Launch window with these checkboxes:
+  Wipe user data -- uncheck this
+  Launch from snapshot -- uncheck this
+  Save to snapshot -- check this
+(If you've set --scale in your Run configuration, the AVD Manager doesn't know
+about it -- check "Scale display to real size" and change the window size so
+that the scale (shown below the dpi box) is what you want.)
+Launch.  Wait for the emulator to boot completely.  Start the demo app if you
+want.  Exit from the emulator -- that will save the first snapshot.  Go back to
+the AVD Manager and (if needed) change the launch settings to:
+  Wipe user data -- uncheck this
+  Launch from snapshot -- check this
+  Save to snapshot -- check this
+If you had to change anything, launch the emulator.  After this, you can start
+it using Eclipse's Run.
+
+If you want to build this for a different API version from what I happened to
+use, it's not enough to change the target in the Run configuration -- you'll
+also need to edit uses-sdk in AndroidManifest.xml.  Eclipse does not update
+that on Clean.
+
+If you're using ctrl-F11 (Windows) or ctrl-fn-F11 (MacOS) to change orientation,
+and after switching from portrait to landscape and back, the form no longer
+changes orientation, you have an emulator with this "gravity sensor" bug:
+http://stackoverflow.com/questions/2481793/screen-orientation-landscape-back-to-portrait-not-working
+http://code.google.com/p/android/issues/detail?id=13189
+A workaround is to click Home -- that will update the orientation.  After that
+you'll have to navigate to the still-running app's icon in the Home menu and
+click it.

@@ -1,0 +1,7 @@
+Just plain text
+Message with a returnin the middle
+Raw number &IaA more text number w/ lc i &ixX
+Raw number w/ bytes in the ctrl char range &I more text
+
+Line after empty line
+Last line w/ no CR
